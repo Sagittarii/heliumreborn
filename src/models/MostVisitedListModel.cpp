@@ -58,8 +58,6 @@ MostVisitedListModel::~MostVisitedListModel() {
 // private:
 void MostVisitedListModel::init() {
    QDEBUG("MostVisitedListModel::init()");
-   // Register RoleNames for that this Model will "answer for"
-   setRoleNames(m_roleNames);
 
    // Initialize caches
    m_mostVisitedItemsCache = LinkItemsSharedCaches::acquireHistoryItemsCache();
@@ -86,6 +84,11 @@ void MostVisitedListModel::setLogbook(Logbook *logbook) {
          connect(m_logbook, SIGNAL(historyChanged(linkItemId)), this, SLOT(onLogbookHistoryChanged(linkItemId)));
       }
    }
+}
+
+QHash<int, QByteArray> MostVisitedListModel::roleNames() const
+{
+    return m_roleNames;
 }
 
 // public: Extend QAbstractListModel
@@ -156,15 +159,17 @@ linkItemId MostVisitedListModel::getCachedMostVisitedId(const int &row) {
 }
 
 void MostVisitedListModel::onLogbookHistoryChanged(const linkItemId &id) {
+   beginResetModel();
    m_mostVisitedItemsCache->insert(id, m_logbook->getHistory(id)); //< Update only the item that actually changed
    m_mostVisitedItemsIdCache.clear(); //< The (row,id) association needs to be regenerated
    m_currentRowCount = m_logbook->getMostVisitedHistoriesCount();
-   reset(); //< Model Reset
+   endResetModel(); //< Model Reset
 }
 
 void MostVisitedListModel::onLogbookHistoriesChanged() {
+   beginResetModel();
    m_mostVisitedItemsCache->clear(); //< The (id, HistoryItem) association needs to be regenerated
    m_mostVisitedItemsIdCache.clear(); //< The (row,id) association needs to be regenerated
    m_currentRowCount = m_logbook->getMostVisitedHistoriesCount();
-   reset(); //< Model Reset
+   endResetModel(); //< Model Reset
 }

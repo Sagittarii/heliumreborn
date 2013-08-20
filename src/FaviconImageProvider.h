@@ -27,7 +27,7 @@
 #ifndef FAVICONIMAGEPROVIDER_H
 #define FAVICONIMAGEPROVIDER_H
 
-#include <QDeclarativeImageProvider>
+#include <QQuickImageProvider>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QImage>
@@ -39,7 +39,7 @@
   Note: The Class depends on the SQL Schema of the WebKit's Icon Database. If it changes, this class should change.
   Info about Favicon: \link{http://en.wikipedia.org/wiki/Favicon}
   */
-class FaviconImageProvider : public QDeclarativeImageProvider
+class FaviconImageProvider : public QQuickImageProvider
 {
 public:
     FaviconImageProvider();

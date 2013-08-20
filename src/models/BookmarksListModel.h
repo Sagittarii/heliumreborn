@@ -68,6 +68,8 @@ public:
    Qt::ItemFlags flags(const QModelIndex &index) const;
    QModelIndex index (int row, int column, const QModelIndex &parent = QModelIndex()) const;
 
+   virtual QHash<int,QByteArray> roleNames() const;
+
 public slots:
    void remove(const linkItemId &bookmarkItemId);
    void removeAll();

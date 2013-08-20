@@ -13,7 +13,7 @@
 #define SELECT_ICON_DATA_BY_URL_SQL    "SELECT data FROM PageUrl JOIN IconData ON PageUrl.iconID = IconData.iconID WHERE PageUrl.url = ?"
 
 FaviconImageProvider::FaviconImageProvider() :
-      QDeclarativeImageProvider(QDeclarativeImageProvider::Image),
+      QQuickImageProvider(QQuickImageProvider::Image),
       m_db(QSqlDatabase::addDatabase("QSQLITE", DB_CONN)),
       m_defaultFavicon(QImage(DEFAULT_FAVICON_PATH))
 {

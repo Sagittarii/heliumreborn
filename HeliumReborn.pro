@@ -2,7 +2,7 @@ TARGET = heliumreborn
 
 TEMPLATE = app
 
-QT += declarative \
+QT += qml quick \
     gui \
     core \
     network \
@@ -11,9 +11,9 @@ QT += declarative \
     sql
 
 # Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH =
+#QML_IMPORT_PATH =
 
-symbian:TARGET.UID3 = 0xE244D944
+#symbian:TARGET.UID3 = 0xE244D944
 
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will
@@ -23,7 +23,7 @@ symbian:TARGET.UID3 = 0xE244D944
 #symbian:DEPLOYMENT.installer_header = 0x2002CCCF
 
 # Allow network access on Symbian
-symbian:TARGET.CAPABILITY += NetworkServices
+#symbian:TARGET.CAPABILITY += NetworkServices
 
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
@@ -31,7 +31,7 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # MOBILITY +=
 
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
-CONFIG += qdeclarative-boostable
+CONFIG += qdeclarative5-boostable
 
 # Add dependency to Symbian components
 # CONFIG += qt-components
@@ -50,14 +50,10 @@ SOURCES += main.cpp \
     src/models/MostVisitedListModel.cpp \
     src/utility/SqliteDbHelper.cpp
 
-# Please do not modify the following two lines. Required for deployment.
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
-qtcAddDeployment()
 
-target.path=/usr/bin
 
-RESOURCES += \
-    res.qrc
+#RESOURCES += \
+#    res.qrc
 
 HEADERS += \
     src/Core.h \
@@ -80,33 +76,98 @@ HEADERS += \
 INCLUDEPATH+=src \
              src/utility
 
-OTHER_FILES += \
-    qml/HeliumReborn/MainPage.qml \
-    qml/HeliumReborn/main.qml \
-    qml/HeliumReborn/LogbookView.qml \
-    qml/HeliumReborn/Header.qml \
-    qml/HeliumReborn/FlickableWebView.qml \
-    qml/HeliumReborn/FieldText.qml \
-    qml/HeliumReborn/common/VScrollDropShadow.qml \
-    qml/HeliumReborn/common/TopDropShadow.qml \
-    qml/HeliumReborn/common/EmbossedButton.qml \
-    qml/HeliumReborn/common/BottomDropShadow.qml \
-    qml/HeliumReborn/common/Background.qml \
-    qml/HeliumReborn/LogbookViewComponents/TabButton.qml \
-    qml/HeliumReborn/LogbookViewComponents/TabBar.qml \
-    qml/HeliumReborn/LogbookViewComponents/MostVisitedListView.qml \
-    qml/HeliumReborn/LogbookViewComponents/LogbookListView.qml \
-    qml/HeliumReborn/LogbookViewComponents/HistoryListView.qml \
-    qml/HeliumReborn/LogbookViewComponents/Header.qml \
-    qml/HeliumReborn/LogbookViewComponents/BookmarksListView.qml
+#OTHER_FILES += \
+#    main.qml \
+#    qml/MainPage.qml \
+#    qml/LogbookView.qml \
+#    qml/Header.qml \
+#    qml/FlickableWebView.qml \
+#    qml/FieldText.qml \
+#    qml/common/VScrollDropShadow.qml \
+#    qml/common/TopDropShadow.qml \
+#    qml/common/EmbossedButton.qml \
+#    qml/common/BottomDropShadow.qml \
+#    qml/common/Background.qml \
+#    qml/LogbookViewComponents/TabButton.qml \
+#    qml/LogbookViewComponents/TabBar.qml \
+#    qml/LogbookViewComponents/MostVisitedListView.qml \
+#    qml/LogbookViewComponents/LogbookListView.qml \
+#    qml/LogbookViewComponents/HistoryListView.qml \
+#    qml/LogbookViewComponents/Header.qml \
+#    qml/LogbookViewComponents/BookmarksListView.qml \
+#    rpm/heliumreborn.desktop
 
 
 
 
+# QML files and folders
+#qml.files += \
+#    main.qml \
+#    qml/MainPage.qml \
+#    qml/LogbookView.qml \
+#    qml/Header.qml \
+#    qml/FlickableWebView.qml \
+#    qml/FieldText.qml \
+#    qml/common/VScrollDropShadow.qml \
+#    qml/common/TopDropShadow.qml \
+#    qml/common/EmbossedButton.qml \
+#    qml/common/BottomDropShadow.qml \
+#    qml/common/Background.qml \
+#    qml/LogbookViewComponents/TabButton.qml \
+#    qml/LogbookViewComponents/TabBar.qml \
+#    qml/LogbookViewComponents/MostVisitedListView.qml \
+#    qml/LogbookViewComponents/LogbookListView.qml \
+#    qml/LogbookViewComponents/HistoryListView.qml \
+#    qml/LogbookViewComponents/Header.qml \
+#    qml/LogbookViewComponents/BookmarksListView.qml \
+
+qml.files = main.qml *.qml qml qml/common qml/LogBookViewcomponents
+
+# The .desktop file
+desktop.files = heliumreborn.desktop
+
+# Please do not modify the following two lines. Required for deployment.
+#target.path=/usr/bin
+#include(qmlapplicationviewer/qmlapplicationviewer.pri)
+#qtcAddDeployment()
+
+DEPLOYMENT_PATH = /usr/share/$$TARGET
+
+# Icons
+icons.files = pics/*.png
+icons.path = $$DEPLOYMENT_PATH/qml/pics
+INSTALLS += icons
+
+OTHER_FILES = rpm/heliumreborn.yaml
 
 
+SOURCES += qmlapplicationviewer/qmlapplicationviewer.cpp
+HEADERS += qmlapplicationviewer/qmlapplicationviewer.h
+INCLUDEPATH += qmlapplicationviewer
 
+TARGETPATH = /usr/bin
+target.path = $$TARGETPATH
 
+qml.path = $$DEPLOYMENT_PATH
+desktop.path = /usr/share/applications
+
+contains(CONFIG, desktop) {
+    DEFINES *= DESKTOP
+    QT += opengl
+}
+
+INSTALLS += target qml desktop
+
+DEFINES += DEPLOYMENT_PATH=\"\\\"\"$${DEPLOYMENT_PATH}/\"\\\"\"
+
+CONFIG += link_pkgconfig
+packagesExist(qdeclarative5-boostable) {
+    message("Building with qdeclarative5-boostable support")
+    DEFINES += HAS_BOOSTER
+    PKGCONFIG += qdeclarative5-boostable
+} else {
+    warning("qdeclarative5-boostable not available; startup times will be slower")
+}
 
 
 

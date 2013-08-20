@@ -21,8 +21,8 @@
 */
 
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import com.nokia.meego 2.0
 
 // TextInput box in which the User types the URL
 TextField {
@@ -72,7 +72,7 @@ TextField {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 16
-        source: "qrc:/qmls/pics/default-favico-30x30.png"
+        source: "pics/default-favico-30x30.png"
         opacity: 1
     }
 
@@ -83,7 +83,7 @@ TextField {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 16
-        source: "qrc:/qmls/pics/reload-30x30.png"
+        source: "pics/reload-30x30.png"
         opacity: 0.7
         MouseArea {
             anchors.fill: parent
@@ -100,7 +100,7 @@ TextField {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 16
-        source: "qrc:/qmls/pics/clear-30x30.png"
+        source: "pics/clear-30x30.png"
         opacity: 0
         MouseArea {
             anchors.fill: parent
@@ -116,7 +116,7 @@ TextField {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 16
-        source: "qrc:/qmls/pics/stop-30x30.png"
+        source: "pics/stop-30x30.png"
         opacity: 0
         MouseArea {
             anchors.fill: parent

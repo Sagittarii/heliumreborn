@@ -56,6 +56,8 @@ private:
 public:
    void setLogbook(Logbook *logbook);
 
+   virtual QHash<int,QByteArray> roleNames() const;
+
 public:
 // Implement ListModel
    static const char * metaTypeName() { return "MostVisitedListModel"; }

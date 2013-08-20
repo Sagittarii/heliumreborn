@@ -11,7 +11,7 @@
 * or see the "LICENSE.txt" file for more details.
 *
 *--------------------------------------------------------
-* File Name   : Background.qml
+* File Name   : TopDropShadow.qml
 *
 * Created     : 15 June 2011
 *
@@ -20,6 +20,10 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
-Rectangle { color: "#555"; z: -1; }
+Image {
+   source: "pics/softshadow-top.png"
+   height: 16
+}
+

@@ -53,11 +53,14 @@ BookmarksListModel::~BookmarksListModel() {
    LinkItemsSharedCaches::releaseBookmarkItemsCache();
 }
 
+QHash<int, QByteArray> BookmarksListModel::roleNames() const
+{
+    return m_roleNames;
+}
+
 // private:
 void BookmarksListModel::init() {
    QDEBUG("BookmarksListModel::init()");
-   // Register RoleNames for that this Model will "answer for"
-   setRoleNames(m_roleNames);
 
    // Initialize caches
    m_bookmarkItemsCache = LinkItemsSharedCaches::acquireBookmarkItemsCache();
@@ -177,15 +180,17 @@ linkItemId BookmarksListModel::getCachedBookmarkId(const int &row) {
 
 void BookmarksListModel::onLogbookBookmarkChanged(const linkItemId &id) {
    Q_UNUSED(id)
+    beginResetModel();
    m_bookmarkItemsCache->insert(id, m_logbook->getBookmark(id)); //< Update only the item that actually changed
    m_bookmarkItemsIdCache.clear(); //< The (row,id) association needs to be regenerated
    m_currentRowCount = m_logbook->getBookmarksCount(); //< Update RowCount
-   reset(); //< Model Reset - The View will redraw
+   endResetModel(); //< Model Reset - The View will redraw
 }
 
 void BookmarksListModel::onLogbookBookmarksChanged() {
+   beginResetModel();
    m_bookmarkItemsCache->clear();
    m_bookmarkItemsIdCache.clear(); //< The (row,id) association needs to be regenerated
    m_currentRowCount = m_logbook->getBookmarksCount(); //< Update RowCount
-   reset(); //< Model Reset - The View will redraw
+   endResetModel(); //< Model Reset - The View will redraw
 }

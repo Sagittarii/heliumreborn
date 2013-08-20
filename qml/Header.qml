@@ -20,7 +20,7 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 import "common"
 
@@ -50,7 +50,7 @@ Item {
 
    BorderImage {
       id: headerSkeleton
-      source: "qrc:/qmls/pics/bar-bg-10x80.png"
+      source: "pics/bar-bg-10x80.png"
       border.top: 1
       border.bottom: 1
       width: parent.width
@@ -65,7 +65,7 @@ Item {
       // Busy Loading Icon
       Image {
          id : busyLoadingIcon
-         source: "qrc:/qmls/pics/busy-loading-26x26.png"
+         source: "pics/busy-loading-26x26.png"
          height: headerText.height-4
          width: height
          smooth: true
@@ -80,7 +80,7 @@ Item {
             },
             State {
                name: "visible"; when: header.loading;
-               PropertyChanges { target: busyLoadingIcon; source: "qrc:/qmls/pics/busy-loading-26x26.png"}
+               PropertyChanges { target: busyLoadingIcon; source: "pics/busy-loading-26x26.png"}
                PropertyChanges { target: rotationAnimation; running: true; }
             }
          ]
@@ -135,7 +135,7 @@ Item {
          anchors.rightMargin: UiConstants.DefaultMargin
 
          BorderImage {
-            source: "qrc:/qmls/pics/progressbar.png"
+            source: "pics/progressbar.png"
             border.bottom: 17
             border.top: 17
             border.left: 13

@@ -29,14 +29,14 @@
 #define WEBVIEWINTERFACE_H
 
 #include <QObject>
-#include <QGraphicsObject>
+#include <QQuickItem>
 #include <QPixmap>
 #include <QUrl>
 
 class WebViewInterface
 {
 public:
-   WebViewInterface(const QGraphicsObject *root, const QString &webViewObjectName);
+   WebViewInterface(const QQuickItem *root, const QString &webViewObjectName);
 
 public:
    QString title();

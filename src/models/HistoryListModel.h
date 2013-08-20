@@ -49,6 +49,8 @@ public:
    HistoryListModel(const HistoryListModel &copy);
    virtual ~HistoryListModel();
 
+   virtual QHash<int,QByteArray> roleNames() const;
+
 private:
    void init();
 

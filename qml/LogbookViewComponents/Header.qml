@@ -20,14 +20,14 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 import "../common"
 
 BorderImage {
    id: header
 
-   source: "qrc:/qmls/pics/bar-bg-10x80.png"
+   source: "pics/bar-bg-10x80.png"
    border.top: 1
    border.bottom: 1
    smooth: true

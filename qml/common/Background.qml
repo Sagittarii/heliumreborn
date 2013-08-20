@@ -11,7 +11,7 @@
 * or see the "LICENSE.txt" file for more details.
 *
 *--------------------------------------------------------
-* File Name   : LogbookListView.qml
+* File Name   : Background.qml
 *
 * Created     : 15 June 2011
 *
@@ -20,27 +20,6 @@
 *
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.1
+import QtQuick 2.0
 
-import "../common"
-
-ListView {
-// model: SET HERE THE MODEL
-   cacheBuffer: 300
-   pressDelay: 200
-
-   Background { anchors.fill: parent; z: -1; }
-
-   ScrollDecorator {
-      flickableItem: parent
-   }
-
-   VScrollDropShadow {
-      x: -parent.contentX
-      y: -parent.contentY
-      width: parent.width
-      height: parent.contentHeight
-      z: 0
-   }
-}
+Rectangle { color: "#555"; z: -1; }

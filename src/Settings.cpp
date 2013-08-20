@@ -2,7 +2,7 @@
 
 #include <QVariant>
 #include <QDir>
-#include <QDesktopServices>
+#include <QStandardPaths>
 #include <QNetworkProxy>
 #include <QWebSettings>
 
@@ -174,8 +174,8 @@ void Settings::reloadWebSettings() {
 
 QString Settings::dbFilePath() {
     QDir dir;
-    dir.mkpath(QDesktopServices::storageLocation( QDesktopServices::DataLocation));
-    QString dbFileLocation = QDir(QDesktopServices::storageLocation( QDesktopServices::DataLocation) ).absoluteFilePath( CORE_DB_FILE_NAME );
+    dir.mkpath(QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0));
+    QString dbFileLocation = QDir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0) ).absoluteFilePath( CORE_DB_FILE_NAME );
 #if defined(Q_WS_MAEMO_5) || defined(Q_OS_LINUX)
 
 #elif defined(Q_OS_WIN32) || defined(Q_OS_SYMBIAN)

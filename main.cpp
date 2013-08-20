@@ -1,22 +1,22 @@
-#include <QtGui/QApplication>
+#include <QGuiApplication>
 #include "qmlapplicationviewer.h"
 #include "src/Core.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
+    QScopedPointer<QGuiApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     Core *core;
     if( app->arguments().length() > 1 ) {
-        core = new Core(viewer->getView(), app->arguments().last());
+        core = new Core(viewer.data(), app->arguments().last());
     } else {
-        core = new Core(viewer->getView());
+        core = new Core(viewer.data());
     }
 
-    viewer->getView()->setWindowTitle("Browser");
-    viewer->setMainQmlFile("qrc:/qmls/qml/HeliumReborn/main.qml");
+    viewer->setTitle("Browser");
+    viewer->setMainQmlFile("/usr/share/heliumreborn/main.qml");
 
     core->start();
 

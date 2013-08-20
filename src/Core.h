@@ -31,12 +31,12 @@
 #include <QObject>
 #include <QStateMachine>
 #include <QMetaType>
-#include <QDeclarativeComponent>
-#include <QGraphicsObject>
+#include <QQmlComponent>
+#include <QQuickItem>
 #include <QSettings>
 #include <QNetworkReply>
 #include <QSslError>
-#include <QDeclarativeView>
+#include <QQuickView>
 
 #include "buildconfig.h"
 #include "WebViewInterface.h"
@@ -52,7 +52,7 @@ class Core : public QObject, public Declarativable
    Q_PROPERTY(QString currentUrl READ currentUrl WRITE setCurrentUrl NOTIFY currentUrlChanged)
 
 public:
-   Core(QDeclarativeView *mainView, QString url="", QObject *parent = 0);
+   Core(QQuickView *mainView, QString url="", QObject *parent = 0);
    virtual ~Core();
 
    /** (Gentlemen,) Start THIS Engine */
@@ -91,8 +91,8 @@ private slots:
    void onEngineQuit();
    void onShowBrowserView();
    void onShowLogbookView();
-   void onMainViewStatusChanged(QDeclarativeView::Status status);
-   void onLogbookViewComponentStatusChanged(QDeclarativeComponent::Status status);
+   void onMainViewStatusChanged(QQuickView::Status status);
+   void onLogbookViewComponentStatusChanged(QQmlComponent::Status status);
 
 private slots:
    void inflateBookmarksListModel();
@@ -120,14 +120,14 @@ private:
    QStateMachine                       m_stateMachine;
    QString                             m_currentUrl;
    QSettings                           m_settings;
-   QDeclarativeView                            *m_mainView; //< Not Owned
+   QQuickView                          *m_mainView; //< Not Owned
    WebViewInterface                    *m_WebViewInterface; //< Owned
    BookmarksListModel                  *m_bookmarksModel; //< Owned, as a child QObject
    MostVisitedListModel                *m_mostVisitedModel; //< Owned, as a child QObject
    HistoryListModel                    *m_historyModel; //< Owned, as a child QObject
-   QGraphicsObject                     *m_browserView; //< Not owned
-   QDeclarativeComponent               *m_logbookViewComponent; //< Owned, as child QObject
-   QGraphicsObject                     *m_logbookView; //< Owned
+   QQuickItem                          *m_browserView; //< Not owned
+   QQmlComponent                       *m_logbookViewComponent; //< Owned, as child QObject
+   QQuickItem                          *m_logbookView; //< Owned
    Logbook                             *m_logbook; //< Owned
 };
 

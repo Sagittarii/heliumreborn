@@ -20,18 +20,18 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 Item {
    Image {
-      source: "qrc:/qmls/pics/softshadow-top.png"
+      source: "pics/softshadow-top.png"
       x: 0
       y: -16
       width: parent.width
       height: 16
    }
    Image {
-      source: "qrc:/qmls/pics/softshadow-bottom.png"
+      source: "pics/softshadow-bottom.png"
       x: 0
       y: parent.height
       width: parent.width

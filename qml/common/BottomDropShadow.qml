@@ -20,9 +20,9 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 Image {
-   source: "qrc:/qmls/pics/softshadow-bottom.png"
+   source: "pics/softshadow-bottom.png"
    height: 16
 }

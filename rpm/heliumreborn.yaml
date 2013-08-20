@@ -7,41 +7,43 @@ License:    LGPL v2.1
 URL:        https://github.com/nemomobile/heliumreborn
 Sources:
     - "%{name}-%{version}.tar.bz2"
-    - heliumreborn.desktop
-    - portrait.png
-    - landscape.png
 Description: Helium Mobile browser ported to Qt Quick Components for Nemo Mobile.
 Configure: none
-Builder: qmake
+Builder: qmake5
 Requires: 
     - /usr/bin/update-desktop-database
     - libqtwebkit-qmlwebkitplugin
 
-# These are the flags QtSDK sets for Harmattan
-# we want to keep both QtSDK harmattan and Nemo build as close as possible
-# so we define the same flags
 QMakeOptions:
-    - "MEEGO_VERSION_MAJOR=1"
-    - "MEEGO_VERSION_MINOR=2"
-    - "MEEGO_VERSION_PATCH=0"
-    - "MEEGO_EDITION=harmattan"
-    - "DEFINES+=MEEGO_EDITION_HARMATTAN"
+
 
 PkgConfigBR:
-    - QtCore >= 4.7.0
-    - QtOpenGL
-    - QtWebKit
-    - QtDeclarative
-    - QtGui
-    - qdeclarative-boostable
+    - Qt5Core
+    - Qt5OpenGL
+    - Qt5WebKit
+    - Qt5Declarative
+    - Qt5Gui
+    - Qt5Sql
+    - Qt5Quick
+    - Qt5Qml
+    - qdeclarative5-boostable
  
 # We set explicitly platform specific platform screens here since
 # the UI looks slightly different in Harmattan and thus there different
 # splashcreens are needed.
 Files:
-    - "%{_bindir}/heliumreborn"
-    - "%{_datadir}/applications/heliumreborn.desktop"
-    - "/opt/heliumreborn/landscape.png"
-    - "/opt/heliumreborn/portrait.png"
-
-
+-
+- /usr/share/heliumreborn/main.qml
+- /usr/share/heliumreborn/qml
+- /usr/share/heliumreborn/qml/*.qml
+- /usr/share/heliumreborn/qml/common
+- /usr/share/heliumreborn/qml/common/*.qml
+- /usr/share/heliumreborn/qml/LogbookViewComponents
+- /usr/share/heliumreborn/qml/LogbookViewComponents/*.qml
+- /usr/share/heliumreborn/qml/pics
+- /usr/share/heliumreborn/qml/pics/*.png
+- /usr/bin/heliumreborn
+- /usr/bin
+- /usr/share/applications/heliumreborn.desktop
+- /usr/share/heliumreborn
+- /usr/share/applications

@@ -59,11 +59,15 @@ HistoryListModel::~HistoryListModel() {
    LinkItemsSharedCaches::releaseHistoryItemsCache();
 }
 
+QHash<int, QByteArray> HistoryListModel::roleNames() const
+{
+    return m_roleNames;
+}
+
+
 // private:
 void HistoryListModel::init() {
    QDEBUG("HistoryListModel::init()");
-   // Register RoleNames for that this Model will "answer for"
-   setRoleNames(m_roleNames);
 
    // Initialize caches
    m_historyItemsCache = LinkItemsSharedCaches::acquireHistoryItemsCache();
@@ -184,15 +188,17 @@ linkItemId HistoryListModel::getCachedHistoryId(const int &row) {
 }
 
 void HistoryListModel::onLogbookHistoryChanged(const linkItemId &id) {
+   beginResetModel();
    m_historyItemsCache->insert(id, m_logbook->getHistory(id)); //< Update only the item that actually changed
    m_historyItemsIdCache.clear(); //< The (row,id) association needs to be regenerated
    m_currentRowCount = m_logbook->getHistoriesCount(); //< Update RowCount
-   reset(); //< Model Reset
+   endResetModel(); //< Model Reset
 }
 
 void HistoryListModel::onLogbookHistoriesChanged() {
+   beginResetModel();
    m_historyItemsCache->clear(); //< The (id, HistoryItem) association needs to be regenerated
    m_historyItemsIdCache.clear(); //< The (row,id) association needs to be regenerated
    m_currentRowCount = m_logbook->getHistoriesCount(); //< Update RowCount
-   reset(); //< Model Reset
+   endResetModel(); //< Model Reset
 }

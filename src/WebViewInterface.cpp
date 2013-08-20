@@ -1,8 +1,7 @@
 #include "WebViewInterface.h"
 
 // public:
-WebViewInterface::WebViewInterface(
-      const QGraphicsObject *root,
+WebViewInterface::WebViewInterface(const QQuickItem *root,
       const QString &webViewObjectName)
 {
    m_webView = root->findChild<QObject *>(webViewObjectName);

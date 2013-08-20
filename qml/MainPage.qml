@@ -1,24 +1,23 @@
-import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import QtQuick 2.0
+import com.nokia.meego 2.0
 import "common"
 
 Page {
     id: mainPage
     tools: ToolBarLayout {
         ToolIcon {
-            iconSource: "qrc:/qmls/pics/back-30x30.png"
+            iconSource: "pics/back-30x30.png"
             onClicked: { mainPage.back(); }
         }
 
         ToolIcon {
-            iconSource: "qrc:/qmls/pics/home-30x30.png"
+            iconSource: "pics/home-30x30.png"
             onClicked: { if (appcore) appcore.loadHomeUrl(); }
 
         }
 
         ToolIcon {
-            iconSource: "qrc:/qmls/pics/forward-30x30.png"
+            iconSource: "pics/forward-30x30.png"
             onClicked: { mainPage.forward(); }
 
         }
@@ -26,11 +25,11 @@ Page {
         InfoBanner {
             id: bookmarkAdded
             text: "Bookmark added"
-            iconSource:"qrc:/qmls/pics/bookmark-icon-30x30.png"
+            iconSource:"pics/bookmark-icon-30x30.png"
         }
 
         ToolIcon {
-            iconSource: "qrc:/qmls/pics/new-bookmark-30x30.png"
+            iconSource: "pics/new-bookmark-30x30.png"
             onClicked: {
                 bookmarkAdded.show();
                 if (appcore)
@@ -39,7 +38,7 @@ Page {
         }
 
         ToolIcon {
-            iconSource: "qrc:/qmls/pics/bookmarks-30x30.png"
+            iconSource: "pics/bookmarks-30x30.png"
             onClicked: { pageStack.openSheet(Qt.resolvedUrl("LogbookSheet.qml")) }
 
         }

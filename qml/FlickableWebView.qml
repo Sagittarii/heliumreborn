@@ -20,29 +20,29 @@
 *
 */
 
-import QtQuick 1.1
-import QtWebKit 1.0
+import QtQuick 2.0
+import QtWebKit 3.0
 
 Flickable {
    id: flickable
 
    // Properties
    property alias title: webView.title
-   property alias progress: webView.progress
+   //property alias progress: webView.progress
    property alias url: webView.url
-   property alias back: webView.back
-   property alias reload: webView.reload
-   property alias stop: webView.stop
-   property alias forward: webView.forward
+   property alias back: webView.canGoBack
+   //property alias reload: webView.reload
+   //property alias stop: webView.stop
+   property alias forward: webView.canGoForward
    property alias icon: webView.icon
-   property bool loading: webView.progress != 1.0
+   //property bool loading: webView.progress != 1.0
    property bool zoomActive: false
 
    // Signals
    signal gotFocus
    signal lostFocus
-   signal urlChanged(string urlString)
-   signal iconChanged()
+//   signal urlChanged(string urlString)
+//   signal iconChanged()
 
    // Functions
    function changeUrl(urlString) {
@@ -103,6 +103,35 @@ Flickable {
          id: webView
          objectName: "webView"
          transformOrigin: Item.TopLeft
+         /*
+            Properties
+
+            ErrorDomain : enumeration
+            LoadStatus : enumeration
+            NavigationRequestAction : enumeration
+            NavigationType : enumeration
+            canGoBack : bool
+            canGoForward : bool
+            icon : url
+            loadProgress : int
+            loading : bool
+            title : string
+            url : url
+
+            Signals
+
+            onLinkHovered(hoveredUrl, hoveredTitle)
+            onLoadingChanged(loadRequest)
+            onNavigationRequested(request)
+
+            Methods
+
+            void goBack()
+            void goForward()
+            void loadHtml(string html, url baseUrl, url unreachableUrl)
+            void reload()
+            void stop()
+         */
 
          // Set the URL for this WebView
          function setUrl(urlString) { this.url = appcore.fixUrl(urlString); }
@@ -148,13 +177,14 @@ Flickable {
          smooth: false // We don't want smooth scaling, since we only scale during (fast) transitions
          focus: true
 
-         preferredWidth: flickable.width
-         preferredHeight: flickable.height
-         contentsScale: 1
+         //preferredWidth: flickable.width
+         //preferredHeight: flickable.height
+         //contentsScale: 1
 
          // [Signal Handling]
          Keys.onLeftPressed: { webView.contentsScale -= 0.1; }
          Keys.onRightPressed: { webView.contentsScale += 0.1; }
+         /*
          onAlert: { console.log(message); }
          onFocusChanged: {
             if ( focus == true ) { flickable.gotFocus(); }
@@ -186,8 +216,9 @@ Flickable {
          onIconChanged: { flickable.iconChanged(); }
          onLoadFinished: { if ( appcore ) { appcore.historyCurrentUrl(); } }
          onLoadFailed: { webView.stop.trigger(); }
-         onZoomTo: { doZoom(zoom,centerX,centerY); }
+//         onZoomTo: { doZoom(zoom,centerX,centerY); }
          // [/Signal Handling]
+        */
 
          SequentialAnimation {
             id: quickZoom

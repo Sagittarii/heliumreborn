@@ -20,7 +20,7 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 Rectangle {
    id: embossedButton
@@ -38,7 +38,7 @@ Rectangle {
    radius: 5
 
    BorderImage {
-      source: "qrc:/qmls/pics/embossed-button-overlay-62x62.png"
+      source: "pics/embossed-button-overlay-62x62.png"
       border.left: 6
       border.right: 6
       border.top: 6

@@ -20,7 +20,7 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 import "../common"
 
@@ -39,7 +39,7 @@ LogbookListView {
          color: "#fff"
 
          BorderImage {
-            source: "qrc:/qmls/pics/url-list-bg-10x60.png"
+            source: "pics/url-list-bg-10x60.png"
             border.top: 1
             anchors.fill: parent
          }
@@ -66,7 +66,7 @@ LogbookListView {
 
             Image {
                id: isHomeIcon
-               source: "qrc:/qmls/pics/home-icon-32x32.png"
+               source: "pics/home-icon-32x32.png"
                opacity: model.isHome ? 1 : 0
                anchors.top: parent.top
                anchors.topMargin: -3

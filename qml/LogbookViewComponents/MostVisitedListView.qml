@@ -11,7 +11,7 @@
 * or see the "LICENSE.txt" file for more details.
 *
 *--------------------------------------------------------
-* File Name   : BookmarksListView.qml
+* File Name   : MostVisitedListView.qml
 *
 * Created     : 15 June 2011
 *
@@ -20,7 +20,7 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 import "../common"
 
@@ -39,7 +39,7 @@ LogbookListView {
          color: "#fff"
 
          BorderImage {
-            source: "qrc:/qmls/pics/url-list-bg-10x60.png"
+            source: "pics/url-list-bg-10x60.png"
             border.top: 1
             anchors.fill: parent
          }
@@ -66,7 +66,7 @@ LogbookListView {
 
             Image {
                id: isHomeIcon
-               source: "qrc:/qmls/pics/home-icon-32x32.png"
+               source: "pics/home-icon-32x32.png"
                opacity: model.isHome ? 1 : 0
                anchors.top: parent.top
                anchors.topMargin: -3
@@ -82,7 +82,7 @@ LogbookListView {
          Column {
             anchors.left: delegateIcon.right
             anchors.leftMargin: 3
-            anchors.right: parent.right
+            anchors.right: lastVisitTime.left
             anchors.rightMargin: 3
             anchors.verticalCenter: parent.verticalCenter
             Text {
@@ -104,6 +104,23 @@ LogbookListView {
             }
          }
 
+         Column {
+            id: lastVisitTime
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.margins: 2
+            Text {
+               text: Qt.formatDateTime(model.lastVisit, "ddd d MMM yyyy")
+               font.pixelSize: 10; color: "#aaa";
+            }
+            Text {
+               width: parent.width
+               text: Qt.formatDateTime(model.lastVisit, "hh:mm:ss")
+               font.pixelSize: 10; color: "#aaa";
+               horizontalAlignment: Text.AlignRight
+            }
+         }
+
          Rectangle {
             id: delegateUiHover
             opacity: 0
@@ -114,20 +131,9 @@ LogbookListView {
          MouseArea {
             anchors.fill: parent
             onPressed: { delegateUiHover.opacity = 0.4; }
-            onReleased: { if ( appcore ) { appcore.currentUrl = model.url; logbookSheet.close();} delegateUiHover.opacity = 0; }
+            onReleased: { if ( appcore ) { appcore.currentUrl = model.url; logbookSheet.close(); } delegateUiHover.opacity = 0; }
             onExited: { delegateUiHover.opacity = 0; }
          }
-      }
-   }
-
-   section.property: "title"
-   section.criteria: ViewSection.FirstCharacter
-   section.delegate: Background {
-      width: (parent) ? parent.width : 480
-      height: 30
-      Text {
-         text: section; font.pixelSize: 14; font.bold: true; color: "#fff"; style: Text.Sunken; styleColor: "#000";
-         anchors.left: parent.left; anchors.leftMargin: 4; height: parent.height; verticalAlignment: 'AlignVCenter'
       }
    }
 }

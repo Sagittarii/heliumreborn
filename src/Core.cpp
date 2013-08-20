@@ -2,16 +2,16 @@
 
 #include <QApplication>
 #include <QState>
-#include <QDeclarativeEngine>
-#include <QDeclarativeItem>
-#include <QDeclarativeComponent>
-#include <QDeclarativeContext>
-#include <QDeclarativeError>
+#include <QQmlEngine>
+#include <QQuickItem>
+#include <QQmlComponent>
+#include <QQmlContext>
+#include <QQmlError>
 #include <QMetaType>
 #include <QTimer>
 #include <QList>
 #include <QDesktopWidget>
-#include <QInputContext>
+#include <QInputMethod>
 #include <QNetworkAccessManager>
 #include "QNetworkCookieJar"
 
@@ -19,13 +19,13 @@
 #include "Settings.h"
 #include "FaviconImageProvider.h"
 
-#define ENGINE_BASEURL                    "qrc:/qmls/qml/HeliumReborn/"
+#define ENGINE_BASEURL                    "qml/HeliumReborn/"
 #define BROWSERVIEW_QML                   "MainPage.qml"
 #define BROWSERVIEW_QML_WEBVIEW_OBJ_NAME  "webView"
 #define LOGBOOKVIEW_QML                   "LogbookView.qml"
 
 // public:
-Core::Core(QDeclarativeView *mainView, QString url, QObject *parent) :
+Core::Core(QQuickView *mainView, QString url, QObject *parent) :
       QObject(parent),
       m_mainView(mainView),
       m_WebViewInterface(NULL),
@@ -44,7 +44,7 @@ Core::Core(QDeclarativeView *mainView, QString url, QObject *parent) :
 
    // Let's start tracking orientation
 
-   QDeclarativeContext *context = mainView->rootContext();
+   QQmlContext *context = mainView->rootContext();
 
    context->setContextProperty("mainWindow", mainView);
 
@@ -56,7 +56,7 @@ Core::Core(QDeclarativeView *mainView, QString url, QObject *parent) :
    setCurrentUrl(m_settings.value(SETTINGS_KEY_INITIAL_HOME).toString());
 
    // Listen for MainView status changes
-   connect(m_mainView, SIGNAL(statusChanged(QDeclarativeView::Status)), this, SLOT(onMainViewStatusChanged(QDeclarativeView::Status)));
+   connect(m_mainView, SIGNAL(statusChanged(QQuickView::Status)), this, SLOT(onMainViewStatusChanged(QQuickView::Status)));
 
    // Populating the StateMachine
    QState *showBrowserViewState = new QState();
@@ -214,45 +214,45 @@ void Core::onShowLogbookView() {
    addLogbookViewOnScene();
 }
 
-void Core::onMainViewStatusChanged(QDeclarativeView::Status status) {
+void Core::onMainViewStatusChanged(QQuickView::Status status) {
    switch(status) {
-   case QDeclarativeView::Null: {
-         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QDeclarativeView::Null (0)"); break;
+   case QQuickView::Null: {
+         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QQuickView::Null (0)"); break;
       }
-   case QDeclarativeView::Ready: {
-         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QDeclarativeView::Ready (1)");
+   case QQuickView::Ready: {
+         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QQuickView::Ready (1)");
          // "Grab" the QML WebView into a Native Interface
          m_WebViewInterface = new WebViewInterface(m_mainView->rootObject(), BROWSERVIEW_QML_WEBVIEW_OBJ_NAME);
          break;
       }
-   case QDeclarativeView::Loading: {
-         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QDeclarativeView::Loading (2)"); break;
+   case QQuickView::Loading: {
+         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QQuickView::Loading (2)"); break;
       }
-   case QDeclarativeView::Error: {
-         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QDeclarativeView::Error (3)"); break;
-         QList<QDeclarativeError> errors = m_mainView->errors();
-         for ( QList<QDeclarativeError>::iterator i = errors.begin(); i != errors.end(); ++i ) {
+   case QQuickView::Error: {
+         QDEBUG_EXP("Core::onMainViewStatusChanged()", "QQuickView::Error (3)"); break;
+         QList<QQmlError> errors = m_mainView->errors();
+         for ( QList<QQmlError>::iterator i = errors.begin(); i != errors.end(); ++i ) {
             QDEBUG((*i).url() << ":" << (*i).line() << ":" << (*i).column() << ": " << (*i).description());
          }
       }
    }
 }
 
-void Core::onLogbookViewComponentStatusChanged(QDeclarativeComponent::Status status) {
+void Core::onLogbookViewComponentStatusChanged(QQmlComponent::Status status) {
    switch(status) {
-   case QDeclarativeComponent::Null: {
-         QDEBUG_EXP("Core::onComponentStatusChanged()", "QDeclarativeComponent::Null (0)"); break;
+   case QQmlComponent::Null: {
+         QDEBUG_EXP("Core::onComponentStatusChanged()", "QQmlComponent::Null (0)"); break;
       }
-   case QDeclarativeComponent::Ready: {
-         QDEBUG_EXP("Core::onComponentStatusChanged()", "QDeclarativeComponent::Ready (1)"); break;
+   case QQmlComponent::Ready: {
+         QDEBUG_EXP("Core::onComponentStatusChanged()", "QQmlComponent::Ready (1)"); break;
       }
-   case QDeclarativeComponent::Loading: {
-         QDEBUG_EXP("Core::onComponentStatusChanged()", "QDeclarativeComponent::Loading (2)"); break;
+   case QQmlComponent::Loading: {
+         QDEBUG_EXP("Core::onComponentStatusChanged()", "QQmlComponent::Loading (2)"); break;
       }
-   case QDeclarativeComponent::Error: {
-         QDEBUG_EXP("Core::onComponentStatusChanged()", "QDeclarativeComponent::Error (3)");
-         QList<QDeclarativeError> errors = m_logbookViewComponent->errors();
-         for ( QList<QDeclarativeError>::iterator i = errors.begin(); i != errors.end(); ++i ) {
+   case QQmlComponent::Error: {
+         QDEBUG_EXP("Core::onComponentStatusChanged()", "QQmlComponent::Error (3)");
+         QList<QQmlError> errors = m_logbookViewComponent->errors();
+         for ( QList<QQmlError>::iterator i = errors.begin(); i != errors.end(); ++i ) {
             QDEBUG((*i).url() << ":" << (*i).line() << ":" << (*i).column() << ": " << (*i).description());
          }
          break;
@@ -329,19 +329,20 @@ void Core::deflateMostVisitedListModel() {
 void Core::inflateLogbookView() {
    if ( !m_logbookViewComponent ) {
       QDEBUG_EXP("Core::inflateLogbookView()", "Inflating Component");
-      m_logbookViewComponent = new QDeclarativeComponent(m_mainView->engine(), QUrl(LOGBOOKVIEW_QML), this);
-      connect(m_logbookViewComponent, SIGNAL(statusChanged(QDeclarativeComponent::Status)), this, SLOT(onLogbookViewComponentStatusChanged(QDeclarativeComponent::Status)));
+      m_logbookViewComponent = new QQmlComponent(m_mainView->engine(), QUrl(LOGBOOKVIEW_QML), this);
+      connect(m_logbookViewComponent, SIGNAL(statusChanged(QQmlComponent::Status)), this, SLOT(onLogbookViewComponentStatusChanged(QQmlComponent::Status)));
    }
    if ( !m_logbookView ) {
       QDEBUG_EXP("Core::inflateLogbookView()", "Inflating View");
-      m_logbookView = static_cast<QGraphicsObject *>( m_logbookViewComponent->create() );
+      m_logbookView = static_cast<QQuickItem *>( m_logbookViewComponent->create() );
    }
 }
 
 void Core::deflateLogbookView() {
    if ( m_logbookView ) {
       QDEBUG_EXP("Core::deflateLogbookView()", "Deflating View");
-      m_mainView->scene()->removeItem(m_logbookView);
+      //m_mainView->engine()->scene()->removeItem(m_logbookView);
+      m_logbookView->setParent(NULL); /// \todo hack to correct by finding the removeItem replacement in Qt5...
       delete m_logbookView;
       m_logbookView = NULL;
    }
@@ -359,15 +360,16 @@ void Core::removeLogbookViewFromScene() {
 
 
 void Core::hideVkb() {
-   QInputContext *inputContext = qApp->inputContext();
-   if (!inputContext) {
+   QInputMethod *inputMethod = qApp->inputMethod();
+   if (!inputMethod) {
        // Not cool
        return;
    }
 
    QEvent request(QEvent::CloseSoftwareInputPanel);
-   inputContext->filterEvent(&request);
-   inputContext->reset();
+   inputMethod->hide();
+//   filterEvent(&request);
+//   inputContext->reset();
 }
 
 void Core::clearBookmarks() {

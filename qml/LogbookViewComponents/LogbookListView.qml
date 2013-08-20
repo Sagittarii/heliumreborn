@@ -11,7 +11,7 @@
 * or see the "LICENSE.txt" file for more details.
 *
 *--------------------------------------------------------
-* File Name   : TopDropShadow.qml
+* File Name   : LogbookListView.qml
 *
 * Created     : 15 June 2011
 *
@@ -20,10 +20,27 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
+import com.nokia.meego 1.1
 
-Image {
-   source: "qrc:/qmls/pics/softshadow-top.png"
-   height: 16
+import "../common"
+
+ListView {
+// model: SET HERE THE MODEL
+   cacheBuffer: 300
+   pressDelay: 200
+
+   Background { anchors.fill: parent; z: -1; }
+
+   ScrollDecorator {
+      flickableItem: parent
+   }
+
+   VScrollDropShadow {
+      x: -parent.contentX
+      y: -parent.contentY
+      width: parent.width
+      height: parent.contentHeight
+      z: 0
+   }
 }
-

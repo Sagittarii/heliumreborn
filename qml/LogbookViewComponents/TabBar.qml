@@ -20,7 +20,7 @@
 *
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 import "../common"
 
@@ -30,7 +30,7 @@ BorderImage {
 
    property int selectedTab: 0 // 0 is "bookmarks", 1 is "most visited", 2 is "history"
 
-   source: "qrc:/qmls/pics/bar-bg-10x80.png"
+   source: "pics/bar-bg-10x80.png"
    border.top: 1
    border.bottom: 1
    height: 70
@@ -43,7 +43,7 @@ BorderImage {
 
    TabButton {
       id: bookmarksTab
-      imageSource: "qrc:/qmls/pics/bookmarks-tabicon-30x30.png"
+      imageSource: "pics/bookmarks-tabicon-30x30.png"
       text: "Bookmarks"
       // Positioning
       anchors.left: parent.left
@@ -59,7 +59,7 @@ BorderImage {
 
    TabButton {
       id: mostVisitedTab
-      imageSource: "qrc:/qmls/pics/mostvisited-tabicon-30x30.png"
+      imageSource: "pics/mostvisited-tabicon-30x30.png"
       text: "Most visited"
       // Positioning
       anchors.left: bookmarksTab.right
@@ -75,7 +75,7 @@ BorderImage {
 
    TabButton {
       id: historyTab
-      imageSource: "qrc:/qmls/pics/history-tabicon-30x30.png"
+      imageSource: "pics/history-tabicon-30x30.png"
       text: "History"
       // Positioning
       anchors.left: mostVisitedTab.right
